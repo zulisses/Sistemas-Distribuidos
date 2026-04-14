@@ -5,15 +5,14 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.UnknownHostException;
 
-public class ProverbServerThreadedMain {
+public class ProverbServerMain {
     public static void main(String[] args) {
         try {
             InetAddress address = InetAddress.getByName(ProverbServer.HOSTNAME);
-
             try (ServerSocket serverSocket = new ServerSocket(ProverbServer.PORT, 50, address)) {
-                while(true) {
-                    System.out.printf("waiting for connection on port %d\n", ProverbServer.PORT);
-                    new Thread(new ProverbServer(serverSocket.accept())).start();
+                while (true) {
+                    System.out.printf("Waiting for connection on port %d\n", ProverbServer.PORT);
+                    new ProverbServer(serverSocket.accept()).run();
                 }
             }
         } catch (UnknownHostException e) {
